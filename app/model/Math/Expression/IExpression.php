@@ -8,6 +8,8 @@ use App\Model\Math\Stack;
 
 interface IExpression
 {
+    public function setValue($value);
+
     public function getValue();
 
     public function isOperator(): bool;

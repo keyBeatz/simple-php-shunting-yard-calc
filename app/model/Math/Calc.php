@@ -12,6 +12,8 @@ use App\Model\Math\Service\Expression\Number;
  */
 class Calc
 {
+    const SUPPORTED_OPERATORS = ['+', '-', '*', '/'];
+
     /**
      * @param string $input
      *
@@ -30,21 +32,33 @@ class Calc
         $operatorStack = new Stack;
 
         // prepare stacks
-        foreach ($tokens as $token) {
+        foreach ($tokens as $key => $token) {
             // convert each token to an Expression object
             $expression = ExpressionFactory::create($token);
 
             if ($expression instanceof Number) {
+                // check for negative unary operator
+                if ($key > 1 && $tokens[$key - 1] === '-' && in_array($tokens[$key - 2], self::SUPPORTED_OPERATORS)) {
+                    $expression->setValue(floatval($expression->getValue()) * -1);
+                }
                 $outputStack->push($expression);
             } elseif ($expression->isOperator()) {
+                // if current token is negative unary operator then don't process it
+                if ($key > 1 && $tokens[$key] === '-' && in_array($tokens[$key - 1], self::SUPPORTED_OPERATORS)) {
+                    continue;
+                }
                 $last = $operatorStack->getLast();
 
                 if ($last && $last->isOperator()) {
                     // check all operators from the end of the $operatorStack and move them to the $outputStack until
                     // they have greater or equal precedence (maintain correct order) and there is no left parenthesis
                     // this is simplified version of Shunting-yard algorithm without functions and Power Expression
+                    // It also looks ahead to check negative unary operator presence.
                     while (($end = $operatorStack->getLast()) && $end->isOperator()) {
-                        if ($expression->getPrecedence() <= $end->getPrecedence() || $end->isLeftParenthesis()) {
+                        if (
+                            ($expression->getPrecedence() <= $end->getPrecedence() || $end->isLeftParenthesis()) &&
+                            (count($tokens) - 2 > $key && $tokens[$key + 1] !== '-')
+                        ) {
                             $outputStack->push($operatorStack->pop());
                         } else {
                             break;
