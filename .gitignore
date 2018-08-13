@@ -8,3 +8,4 @@ app/config/config.local.neon
 .expected
 .actual
 node_modules
+/vendor
