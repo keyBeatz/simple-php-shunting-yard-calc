@@ -83,7 +83,7 @@ class Calc
         // finally, compute $outputStack Expressions
         while (($operator = $outputStack->pop()) && $operator->isOperator()) {
             $value = $operator->compute($outputStack);
-            if ($value) {
+            if ($value !== null) {
                 $outputStack->push(ExpressionFactory::create($value));
             }
         }
