@@ -11,7 +11,7 @@ class InputForm extends Form
     function __construct(Nette\ComponentModel\IContainer $parent = null, $name = null)
     {
         parent::__construct($parent, $name);
-        $this->addTextArea('input', 'Value');
+        $this->addTextArea('input');
         $this->addSubmit('submit', 'Submit Value');
     }
 }

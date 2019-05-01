@@ -28,7 +28,7 @@ class SignInFormFactory
     /**
      * @return Form
      */
-    public function create(callable $onSuccess)
+    public function create(callable $onSuccess, callable $onRegister)
     {
         $form = $this->factory->create();
         $form->addText('username', 'Username:')
@@ -40,6 +40,10 @@ class SignInFormFactory
         $form->addCheckbox('remember', 'Keep me signed in');
 
         $form->addSubmit('send', 'Sign in');
+
+        $form->addSubmit('register', 'Register')
+            ->setValidationScope(false)
+            ->onClick[] = $onRegister;
 
         $form->onSuccess[] = function (Form $form, $values) use ($onSuccess) {
             try {

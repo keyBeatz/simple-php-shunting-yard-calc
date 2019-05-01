@@ -1,5 +1,18 @@
-<h1>Calculator</h1>
-<h2>Input</h2>
-{control calc}
-<h2>Output</h2>
-{control calc:output}
+{block content}
+<div class="header">
+    <div class="header-user">
+        {if $user->isLoggedIn()}
+            <span>Logged in as {$user->getIdentity()->getData()['username']}</span>
+        {/if}
+        {control logout}
+    </div>
+</div>
+<hr>
+<div class="calc-wrap">
+    <h1>Calculator</h1>
+    <h2>Input</h2>
+    {control calc}
+    <h2>Output</h2>
+    {control calc:output}
+</div>
+

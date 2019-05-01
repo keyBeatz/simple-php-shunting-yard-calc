@@ -6,7 +6,7 @@ use App\Model\Math\Control\InputForm\IInputFormFactory;
 use App\Model\Math\Calc;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
-
+use Nette\Database\Connection;
 
 class CalcControl extends Control
 {
@@ -49,6 +49,10 @@ class CalcControl extends Control
         $template->output = $output;
         $template->setFile(__DIR__ . '/template/output.latte');
         $template->render();
+    }
+
+    public function renderTest() {
+        $this->template->render(__DIR__ . '/template/test.latte');
     }
 
     public function createComponentInputForm()

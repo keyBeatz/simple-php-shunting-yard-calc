@@ -24,6 +24,10 @@ database:
 
 
 services:
+	- App\Model\UserManager
 	- App\Model\Math\Control\CalcControl\ICalcControlFactory
 	- App\Model\Math\Control\InputForm\IInputFormFactory
+	- App\Forms\FormFactory
+	- App\Forms\SignInFormFactory
+	- App\Forms\SignUpFormFactory
 	router: App\RouterFactory::createRouter

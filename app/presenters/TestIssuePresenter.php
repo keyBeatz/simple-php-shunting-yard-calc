@@ -5,7 +5,7 @@ namespace App\Presenters;
 use App\Model\Math\Control\CalcControl\ICalcControlFactory;
 
 
-class TestIssuePresenter extends BasePresenter
+class TestIssuePresenter extends RestrictedBasePresenter
 {
     /**
      * @var ICalcControlFactory
